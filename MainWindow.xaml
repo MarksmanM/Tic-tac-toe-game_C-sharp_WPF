@@ -8,9 +8,9 @@
         Title="MainWindow" Name="mainWindow" Height="512" Width="1024" MinHeight="256" MinWidth="512" MaxHeight="512" MaxWidth="1024">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition Height="2*"/>
-            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>

@@ -257,6 +257,11 @@ namespace Tic_tac_toe_game
                 MessageBox.Show("Победа Ноликов!");
                 RestartWindow();
             }
+            else if (Winner == -1) 
+            {
+                MessageBox.Show("Ничья! Играйте заново");
+                RestartWindow();
+            }
         }
 
 

@@ -65,12 +65,27 @@ namespace Tic_tac_toe_game.Model
                 return 2; // нолики wins
             }
             else
-            {
-                this.MakeTurn(); // смена хода
-                return 0; //играем дальше
+            {   if (this.IsSomeEmptyCell())
+                {
+                    this.MakeTurn(); // смена хода
+                    return 0; //играем дальше
+                }
+                else
+                {
+                    this.RestartGame();
+                    return -1; // ничья :( начинаем заново
+                }
             }
         }
 
+        public bool IsSomeEmptyCell() 
+        {
+            if (A1 == 0 | A2 == 0 | A3 == 0 | B1 == 0 | B2 == 0 | B3 == 0 | C1 == 0 | C2 == 0 | C3 == 0) return true;
+            else
+            {
+                return false;
+            }
+        }
          
 
         /// <summary>
