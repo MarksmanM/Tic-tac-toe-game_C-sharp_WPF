@@ -25,10 +25,13 @@ namespace Tic_tac_toe_game
         public Board Game = new Board();
 
 
+
+
         public MainWindow()
         {
             InitializeComponent();
-            
+            textBlock1.Text = "0";
+            textBlock2.Text = "0";
             A1.Click += Button_A1_Click;
             A2.Click += Button_A2_Click;
             A3.Click += Button_A3_Click;
@@ -40,6 +43,33 @@ namespace Tic_tac_toe_game
             C3.Click += Button_C3_Click;
         }
 
+        private string _X_count;
+
+        public string X_count
+        {
+            get { return _X_count; }
+            set
+            {
+                if (_X_count != value)
+                {
+                    _X_count = value;
+                }
+            }
+        }
+
+        private string _O_count;
+
+        public string O_count
+        {
+            get { return _O_count; }
+            set
+            {
+                if (_O_count != value)
+                {
+                    _O_count = value;
+                }
+            }
+        }
 
         private void Button_A1_Click(object sender, RoutedEventArgs e)
         {
@@ -217,11 +247,13 @@ namespace Tic_tac_toe_game
             }
             else if (Winner == 1)
             {
+                textBlock1.Text = Game.X_count.ToString();
                 MessageBox.Show("Победа Крестиков!");
                 RestartWindow();
             }
             else if (Winner == 2)
             {
+                textBlock2.Text = Game.O_count.ToString();
                 MessageBox.Show("Победа Ноликов!");
                 RestartWindow();
             }

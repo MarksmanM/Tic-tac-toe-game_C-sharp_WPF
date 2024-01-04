@@ -61,7 +61,7 @@ namespace Tic_tac_toe_game.Model
             else if (this.IsSomeRowFilled() == 2 | this.IsSomeColomnFilled() == 2 | this.IsSomeDiagFilled() == 2)
             {
                 this.RestartGame();
-                O_count -= 1;
+                O_count += 1;
                 return 2; // нолики wins
             }
             else
@@ -152,6 +152,8 @@ namespace Tic_tac_toe_game.Model
         public Board()
         {
             this.RestartGame();
+            this.X_count = 0;
+            this.O_count = 0;
         }
     }
 }
