@@ -78,6 +78,10 @@ namespace Tic_tac_toe_game.Model
             }
         }
 
+        /// <summary>
+        /// Остались ли ещё пустые клетки
+        /// </summary>
+        /// <returns></returns>
         public bool IsSomeEmptyCell() 
         {
             if (A1 == 0 | A2 == 0 | A3 == 0 | B1 == 0 | B2 == 0 | B3 == 0 | C1 == 0 | C2 == 0 | C3 == 0) return true;
