@@ -9,6 +9,7 @@ namespace Tic_tac_toe_game.Model
 {
     /// <summary>
     /// Core class of the game
+    /// ToDo: сделать рефакторинг этой жути, кто это писал
     /// </summary>
     public class Board
     {
@@ -27,6 +28,8 @@ namespace Tic_tac_toe_game.Model
         /// 
         /// </summary>
         public bool Playerturn { get; set; }
+
+        public int[,] Cells = new int[3, 3];
         public int A1 { get; set; }
         public int A2 { get; set; }
         public int A3 { get; set; }
@@ -82,13 +85,16 @@ namespace Tic_tac_toe_game.Model
         /// Остались ли ещё пустые клетки
         /// </summary>
         /// <returns></returns>
-        public bool IsSomeEmptyCell() 
+        public bool IsSomeEmptyCell()
         {
-            if (A1 == 0 | A2 == 0 | A3 == 0 | B1 == 0 | B2 == 0 | B3 == 0 | C1 == 0 | C2 == 0 | C3 == 0) return true;
-            else
+            for (int i = 0; i < 3; i++)
             {
-                return false;
+                for (int j = 0; j < 3; j++)
+                {
+                    if (Cells[i,j] == 0) return true;
+                }
             }
+            return false;
         }
          
 
@@ -98,13 +104,13 @@ namespace Tic_tac_toe_game.Model
         /// <returns></returns>
         int IsSomeRowFilled()
         {
-            if ((this.A1 == 1 && this.A2 == 1 && this.A3 == 1) |
-                (this.B1 == 1 && this.B2 == 1 && this.B3 == 1) |
-                (this.C1 == 1 && this.C2 == 1 && this.C3 == 1))
+            if ((Cells[0, 0] == 1 && Cells[0, 1] == 1 && Cells[0, 2] == 1) |
+                (Cells[1, 0] == 1 && Cells[1, 1] == 1 && Cells[1, 2] == 1) |
+                (Cells[2, 0] == 1 && Cells[2, 1] == 1 && Cells[2, 2] == 1))
                 return 1;
-            else if ((this.A1 == 2 && this.A2 == 2 && this.A3 == 2) |
-                     (this.B1 == 2 && this.B2 == 2 && this.B3 == 2) |
-                     (this.C1 == 2 && this.C2 == 2 && this.C3 == 2))
+            else if ((Cells[0, 0] == 2 && Cells[0, 1] == 2 && Cells[0, 2] == 2) |
+                     (Cells[1, 0] == 2 && Cells[1, 1] == 2 && Cells[1, 2] == 2) |
+                     (Cells[2, 0] == 2 && Cells[2, 1] == 2 && Cells[2, 2] == 2))
                 return 2;
             else
                 return 0;
@@ -116,13 +122,13 @@ namespace Tic_tac_toe_game.Model
         /// <returns></returns>
         int IsSomeColomnFilled()
         {
-            if ((this.A1 == 1 && this.B1 == 1 && this.C1 == 1) |
-                (this.A2 == 1 && this.B2 == 1 && this.C2 == 1) |
-                (this.A3 == 1 && this.B3 == 1 && this.C3 == 1))
+            if ((Cells[0, 0] == 1 && Cells[1, 0] == 1 && Cells[2, 0] == 1) |
+                (Cells[0, 1] == 1 && Cells[1, 1] == 1 && Cells[2, 1] == 1) |
+                (Cells[0, 2] == 1 && Cells[1, 2] == 1 && Cells[2, 2] == 1))
                 return 1;
-            else if ((this.A1 == 2 && this.B1 == 2 && this.C1 == 2) |
-                     (this.A2 == 2 && this.B2 == 2 && this.C2 == 2) |
-                     (this.A3 == 2 && this.B3 == 2 && this.C3 == 2))
+            else if ((Cells[0, 0] == 2 && Cells[1, 0] == 2 && Cells[2, 0] == 2) |
+                    (Cells[0, 1] == 1 && Cells[1, 1] == 1 && Cells[2, 1] == 2) |
+                    (Cells[0, 2] == 2 && Cells[1, 2] == 2 && Cells[2, 2] == 2))
                 return 2;
             else
                 return 0;
@@ -135,11 +141,11 @@ namespace Tic_tac_toe_game.Model
         /// <returns></returns>
         int IsSomeDiagFilled()
         {
-            if ((this.A1 == 1 && this.B2 == 1 && this.C3 == 1) |
-                (this.A3 == 1 && this.B2 == 1 && this.C1 == 1))
+            if ((Cells[0, 0] == 1 && Cells[1, 1] == 1 && Cells[2, 2] == 1) |
+                (Cells[0, 2] == 1 && Cells[1, 1] == 1 && Cells[2, 0] == 1))
                 return 1;
-            else if ((this.A1 == 2 && this.B2 == 2 && this.C3 == 2) |
-                     (this.A3 == 2 && this.B2 == 2 && this.C1 == 2))
+            else if ((Cells[0, 0] == 2 && Cells[1, 1] == 2 && Cells[2, 2] == 2) |
+                     (Cells[0, 2] == 2 && Cells[1, 1] == 2 && Cells[2, 0] == 2))
                 return 2;
             else
                 return 0;
@@ -148,15 +154,7 @@ namespace Tic_tac_toe_game.Model
         void RestartGame()
         {
             Playerturn = true;
-            this.A1 = 0;
-            this.B1 = 0;
-            this.C1 = 0;
-            this.A2 = 0;
-            this.B2 = 0;
-            this.C2 = 0;
-            this.A3 = 0;
-            this.B3 = 0;
-            this.C3 = 0;
+            Cells = new int[3, 3];
         }
 
         void MakeTurn()

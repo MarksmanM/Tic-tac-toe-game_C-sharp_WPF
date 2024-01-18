@@ -14,6 +14,7 @@ namespace Tic_tac_toe_game.Model
     {
         public Board Game { get; set; }
         public bool AI_Side { get; set; }
+        public Node RootNode { get; set; }
 
         public bool IsMyTurn() 
         {
@@ -23,20 +24,29 @@ namespace Tic_tac_toe_game.Model
 
         public void MakeTurn() 
         {
-            if (IsMyTurn()) 
+            if (IsMyTurn())
             {
                 //алгоритм действий
 
             }
         }
 
+        public void TakeTurn() 
+        {
+        
+        }
+
         /// <summary>
-        /// Игрок выбирает "X"/"O" сторону, бот получает противоположную
+        /// Инициализирует пустое игровое поле и дерево состояний
         /// </summary>
-        /// <param name="PlayerSide"></param>
+        /// <param name="PlayerSide">Игрок выбирает "X"/"O" сторону, бот получает противоположную</param>
         public AI_Player(bool PlayerSide)
         {
-            this.AI_Side = !PlayerSide;
+            Game = new Board();
+            RootNode = new Node();
+            RootNode.Build_Tree();
+            AI_Side = !PlayerSide;
+
         }
     }
 }

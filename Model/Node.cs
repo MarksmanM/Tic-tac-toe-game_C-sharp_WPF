@@ -5,6 +5,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Tic_tac_toe_game.Model
 {
@@ -15,32 +16,6 @@ namespace Tic_tac_toe_game.Model
         public List<int[]> Turns { get; set; }
         public int Depth { get; set;  }
         public bool Value {  get; set; }
-
-        /*
-        public void UpdateTurns() 
-        {
-            for (int i = 0; i < Turns.Length; i++) 
-            {
-                for (int j = 0; j < Turns[i].Length; j++) 
-                {
-                    int[] index = { i, j };
-                    if (Array.IndexOf(Turns,index ) != -1)
-                    {
-                        Nodes[i, j] = null;
-                    }   
-                    else
-                    {
-                        for (int k = 0; k < Turns.Length; k++)
-                        {
-                            Nodes[i,j].Turns[k] = Turns[k];
-                        }
-                        Nodes[i,j].Depth = Depth + 1;
-                        Nodes[i,j].Turns[Turns.Length] = new int[] { i, j };
-                    }
-                    Nodes[i,j].UpdateTurns();
-                }
-            }
-        }*/
         
         /// <summary>
         /// Создание дочернего узла
@@ -56,7 +31,7 @@ namespace Tic_tac_toe_game.Model
         }
 
         /// <summary>
-        /// Построение дерева всех возомжных игровых вариантов 
+        /// Построение дерева всех возмoжных игровых вариантов 
         /// </summary>
         public void Build_Tree() 
         {
@@ -65,7 +40,7 @@ namespace Tic_tac_toe_game.Model
                 for (int j = 0; j < 3; j++) 
                 {
                     int[] Child_index = { i, j };
-                    if (!Turns.Contains(Child_index) & Depth < 8) 
+                    if (!Turns.Contains(Child_index) & Depth < 8) // ToDo: добавить проверку на наличие победителя
                     {
                         AddChild(Child_index);
                         Nodes[i, j].Build_Tree();
@@ -75,17 +50,125 @@ namespace Tic_tac_toe_game.Model
             }
         }
 
-        public int[] FindBestTurn() 
+        /// <summary>
+        /// Поиск оптимального хода
+        /// ToDo: Учесть сложность бота (нуб, средний, бог)
+        /// ToDo: Добавить проверку, правда ли сейчас ход бота
+        /// </summary>
+        /// <param name="difficulty"> 0 - нуб, 1 - средний, 2 - бог</param>
+        /// <returns></returns>
+        public int[] FindBestTurn(int difficulty) 
         {
-        
+            int[] best_index = { -1, -1 };
+
+            int BestScore = -100;
+            //int[,] Matrix = ListToMatrix(Turns);
+            int winner = FindWinnner(ListToMatrix(Turns));          
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    int[] index = { i, j };
+                    int score = Nodes[i, j].MinMax();
+                    if (score > BestScore) 
+                    {
+                        BestScore = score;
+                        best_index = index;
+                    }
+
+                }
+            }
+            return best_index;
         }
 
-        public int WeighyFunction(List<int[]> Turns) 
+        /// <summary>
+        /// Алгоритм минимакс для отыскания оптимального хода с учетом оптимальной игры противника
+        /// </summary>
+        /// <param name="aiplayer"></param>
+        /// <returns></returns>
+        public int MinMax() 
         {
             int[,] Matrix = ListToMatrix(Turns);
-            if () return 10;
-            else if () return -10;
+            int winner = FindWinnner(Matrix);
+            int BestScore = Value? -1000: 1000;
+            if (Value)
+            {
+                if (winner == 1) return 10;
+                else if (winner == 2) return -10;
+                else
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            BestScore = Math.Max(BestScore, Nodes[i, j].MinMax());
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                if (winner == 1) return -10;
+                else if (winner == 2) return 10;
+                else
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            BestScore = Math.Min(BestScore, Nodes[i, j].MinMax());
+                        }
+                    }
+                }
+            }
+            return BestScore;
+        }
+
+        public int FindWinnner(int[,] matrix) 
+        {
+            if (IsSomeColomnFilled(matrix) == 1 | IsSomeRowFilled(matrix) == 1 | IsSomeDiagFilled(matrix) == 1) return 1;
+            else if (IsSomeColomnFilled(matrix) == 2 | IsSomeRowFilled(matrix) == 2 | IsSomeDiagFilled(matrix) == 2) return 2;
             else return 0;
+        }
+
+        int IsSomeRowFilled(int[,] matrix)
+        {
+            if ((matrix[0, 0] == 1 && matrix[0, 1] == 1 && matrix[0, 2] == 1) |
+                (matrix[1, 0] == 1 && matrix[1, 1] == 1 && matrix[1, 2] == 1) |
+                (matrix[2, 0] == 1 && matrix[2, 1] == 1 && matrix[2, 2] == 1))
+                return 1;
+            else if ((matrix[0, 0] == 2 && matrix[0, 1] == 2 && matrix[0, 2] == 2) |
+                     (matrix[1, 0] == 2 && matrix[1, 1] == 2 && matrix[1, 2] == 2) |
+                     (matrix[2, 0] == 2 && matrix[2, 1] == 2 && matrix[2, 2] == 2))
+                return 2;
+            else
+                return 0;
+        }
+
+        int IsSomeColomnFilled(int[,] matrix)
+        {
+            if ((matrix[0,0] == 1 && matrix[1,0] == 1 && matrix[2,0] == 1) |
+                (matrix[0,1] == 1 && matrix[1,1] == 1 && matrix[2,1] == 1) |
+                (matrix[0,2] == 1 && matrix[1,2] == 1 && matrix[2,2] == 1))
+                return 1;
+            else if ((matrix[0, 0] == 2 && matrix[1, 0] == 2 && matrix[2, 0] == 2) |
+                    (matrix[0, 1] == 1 && matrix[1, 1] == 1 && matrix[2, 1] == 2) |
+                    (matrix[0, 2] == 2 && matrix[1, 2] == 2 && matrix[2, 2] == 2))
+                return 2;
+            else
+                return 0;
+        }
+
+        int IsSomeDiagFilled(int[,] matrix)
+        {
+            if ((matrix[0, 0] == 1 && matrix[1, 1] == 1 && matrix[2, 2] == 1) |
+                (matrix[0, 2] == 1 && matrix[1, 1] == 1 && matrix[2, 0] == 1))
+                return 1;
+            else if ((matrix[0, 0] == 2 && matrix[1, 1] == 2 && matrix[2, 2] == 2) |
+                     (matrix[0, 2] == 2 && matrix[1, 1] == 2 && matrix[2, 0] == 2))
+                return 2;
+            else
+                return 0;
         }
 
         /// <summary>
@@ -119,6 +202,17 @@ namespace Tic_tac_toe_game.Model
             {
                 Index
             };
+            Value = true;
+        }
+
+        /// <summary>
+        /// RootNode
+        /// </summary>
+        public Node()
+        {
+            Index = null;
+            Depth = 0;
+            Turns = new List<int[]>();
             Value = true;
         }
     }
