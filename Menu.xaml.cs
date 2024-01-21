@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace Tic_tac_toe_game
 {
     /// <summary>
-    /// Логика взаимодействия для SingleMode.xaml
+    /// Логика взаимодействия для Menu.xaml
     /// </summary>
-    public partial class SingleMode : Page
+    public partial class Menu : UserControl
     {
-        public SingleMode()
+        public Menu()
         {
             InitializeComponent();
         }
+
     }
 }

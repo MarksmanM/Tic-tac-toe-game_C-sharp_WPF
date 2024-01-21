@@ -23,9 +23,8 @@ namespace Tic_tac_toe_game.Model
         /// <param name="cell"></param>
         public void AddChild(int[] cell) 
         {
-            Node ChildNode = new Node(cell);
+            Node ChildNode = new Node(cell, Depth);
             Nodes[cell[0], cell[1]] = ChildNode;
-            Nodes[cell[0], cell[1]].Depth = Depth + 1;
             Nodes[cell[0], cell[1]].Turns.AddRange(Turns);
             Nodes[cell[0], cell[1]].Value = !Value;
         }
@@ -64,9 +63,9 @@ namespace Tic_tac_toe_game.Model
             int BestScore = -100;
             //int[,] Matrix = ListToMatrix(Turns);
             int winner = FindWinnner(ListToMatrix(Turns));          
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     int[] index = { i, j };
                     int score = Nodes[i, j].MinMax();
@@ -97,9 +96,9 @@ namespace Tic_tac_toe_game.Model
                 else if (winner == 2) return -10;
                 else
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        for (int j = 0; j < 2; j++)
+                        for (int j = 0; j < 3; j++)
                         {
                             BestScore = Math.Max(BestScore, Nodes[i, j].MinMax());
                         }
@@ -112,9 +111,9 @@ namespace Tic_tac_toe_game.Model
                 else if (winner == 2) return 10;
                 else
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        for (int j = 0; j < 2; j++)
+                        for (int j = 0; j < 3; j++)
                         {
                             BestScore = Math.Min(BestScore, Nodes[i, j].MinMax());
                         }
@@ -194,10 +193,10 @@ namespace Tic_tac_toe_game.Model
             return matrix;
         }
 
-        public Node(int[] cell) 
+        public Node(int[] cell,int depth) 
         {
             Index = cell;
-            Depth = 0;
+            Depth = depth + 1;
             Turns = new List<int[]>
             {
                 Index
@@ -211,7 +210,7 @@ namespace Tic_tac_toe_game.Model
         public Node()
         {
             Index = null;
-            Depth = 0;
+            Depth = 1;
             Turns = new List<int[]>();
             Value = true;
         }

@@ -15,12 +15,7 @@ namespace Tic_tac_toe_game.Model
         public Board Game { get; set; }
         public bool AI_Side { get; set; }
         public Node RootNode { get; set; }
-
-        public bool IsMyTurn() 
-        {
-            if (Game.Playerturn == this.AI_Side) return true;
-            else return false;
-        }
+        public Node CurrentNode { get; set; }
 
         public void MakeTurn() 
         {
@@ -31,9 +26,20 @@ namespace Tic_tac_toe_game.Model
             }
         }
 
-        public void TakeTurn() 
+        /// <summary>
+        /// Записывает ход игрока
+        /// </summary>
+        /// <param name="Turn"></param>
+        public void TakeTurn(int[] Turn) 
         {
-        
+            Game.Cells[Turn[0], Turn[1]] = AI_Side ? 1 : 2;
+            CurrentNode = CurrentNode.Nodes[Turn[0], Turn[1]];
+        }
+
+        public bool IsMyTurn()
+        {
+            if (Game.Playerturn == this.AI_Side) return true;
+            else return false;
         }
 
         /// <summary>
@@ -44,7 +50,7 @@ namespace Tic_tac_toe_game.Model
         {
             Game = new Board();
             RootNode = new Node();
-            RootNode.Build_Tree();
+            //RootNode.Build_Tree();
             AI_Side = !PlayerSide;
 
         }
