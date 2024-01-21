@@ -3,39 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Tic_tac_toe_game"    
+        xmlns:uc="clr-namespace:Tic_tac_toe_game"    
         mc:Ignorable="d"
         Title="MainWindow" Name="mainWindow" Height="512" Width="1024" MinHeight="256" MinWidth="512" MaxHeight="512" MaxWidth="1024">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="A1" Grid.Column="1" Grid.Row="3" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="A2" Grid.Column="2" Grid.Row="3" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="A3" Grid.Column="3" Grid.Row="3" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="B1" Grid.Column="1" Grid.Row="4" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="B2" Grid.Column="2" Grid.Row="4" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="B3" Grid.Column="3" Grid.Row="4" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="C1" Grid.Column="1" Grid.Row="5" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="C2" Grid.Column="2" Grid.Row="5" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-        <Button x:Name="C3" Grid.Column="3" Grid.Row="5" BorderBrush="#FF4E2222" Background="White" Panel.ZIndex ="1"/>
-
-        <TextBlock x:Name="textBlock1" Grid.Column="1" Grid.Row="1" FontSize="20" FontFamily="Snap ITC" TextAlignment="Center"/>
-        <TextBlock x:Name="textBlock2" Grid.Column="3" Grid.Row="1" FontSize="20" FontFamily="Snap ITC" TextAlignment="Center"/>
-
+        <uc:Menu x:Name="MainMenu"/>
+        <uc:PvPMode x:Name="PvP" Visibility="Collapsed"></uc:PvPMode>
+        <uc:PvEMode x:Name="PvE" Visibility="Collapsed"></uc:PvEMode>
     </Grid>
 </Window>

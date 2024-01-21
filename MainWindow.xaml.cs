@@ -22,261 +22,46 @@ namespace Tic_tac_toe_game
     public partial class MainWindow : Window
     {
 
-        public Board Game = new Board();
-
-
-
-
         public MainWindow()
         {
             InitializeComponent();
-            textBlock1.Text = "0";
-            textBlock2.Text = "0";
-            A1.Click += Button_A1_Click;
-            A2.Click += Button_A2_Click;
-            A3.Click += Button_A3_Click;
-            B1.Click += Button_B1_Click;
-            B2.Click += Button_B2_Click;
-            B3.Click += Button_B3_Click;
-            C1.Click += Button_C1_Click;
-            C2.Click += Button_C2_Click;
-            C3.Click += Button_C3_Click;
+            MainMenu.ToSoloButton.Click += OpenSoloMode;
+            MainMenu.ToPvPButton.Click += OpenPvPMode;
+            PvE.BacktoMenu.Click += BacktoMenuSolo;
+            PvP.BacktoMenu.Click += BacktoMenuPvP;
         }
 
-        private string _X_count;
-
-        public string X_count
+        private void OpenSoloMode(object sender, RoutedEventArgs e)
         {
-            get { return _X_count; }
-            set
-            {
-                if (_X_count != value)
-                {
-                    _X_count = value;
-                }
-            }
+            // Изменяем видимость контейнера с элементами основного функционала
+            PvE.Visibility = Visibility.Visible;
+            MainMenu.Visibility = Visibility.Collapsed;
+
+            // Другие действия, если необходимо
         }
 
-        private string _O_count;
-
-        public string O_count
+        private void OpenPvPMode(object sender, RoutedEventArgs e)
         {
-            get { return _O_count; }
-            set
-            {
-                if (_O_count != value)
-                {
-                    _O_count = value;
-                }
-            }
+            PvP.Visibility = Visibility.Visible;
+            MainMenu.Visibility = Visibility.Collapsed;
         }
 
-        private void Button_A1_Click(object sender, RoutedEventArgs e)
+        private void BacktoMenuSolo(object sender, RoutedEventArgs e)
         {
-            if (Game.A1 == 0) //если поле незанято, то занять его, вывести нужный png на первый план, если занято, то ничего не делать
-            {
-                if (Game.Playerturn)
-                {
-                    Game.A1 = 1;
-                    A1.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else 
-                {
-                    Game.A1 = 2;
-                    A1.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
+            // Изменяем видимость контейнера с элементами основного функционала
+            PvE.Visibility = Visibility.Collapsed;
+            MainMenu.Visibility = Visibility.Visible;
 
-            }
+            // Другие действия, если необходимо
         }
 
-        private void Button_A2_Click(object sender, RoutedEventArgs e)
+        private void BacktoMenuPvP(object sender, RoutedEventArgs e)
         {
-            if (Game.A2 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.A2 = 1;
-                    A2.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.A2 = 2;
-                    A2.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
+            // Изменяем видимость контейнера с элементами основного функционала
+            PvP.Visibility = Visibility.Collapsed;
+            MainMenu.Visibility = Visibility.Visible;
 
-            }
-        }
-
-        private void Button_A3_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.A3 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.A3 = 1;
-                    A3.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.A3 = 2;
-                    A3.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-
-        private void Button_B1_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.B1 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.B1 = 1;
-                    B1.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.B1 = 2;
-                    B1.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-
-        private void Button_B2_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.B2 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.B2 = 1;
-                    B2.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.B2 = 2;
-                    B2.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-        private void Button_B3_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.B3 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.B3 = 1;
-                    B3.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.B3 = 2;
-                    B3.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-        private void Button_C1_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.C1 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.C1 = 1;
-                    C1.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.C1 = 2;
-                    C1.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-
-        private void Button_C2_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.C2 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.C2 = 1;
-                    C2.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.C2 = 2;
-                    C2.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-        private void Button_C3_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Game.C3 == 0)
-            {
-                if (Game.Playerturn)
-                {
-                    Game.C3 = 1;
-                    C3.Background = new ImageBrush(new BitmapImage(new Uri("tic.png", UriKind.Relative)));
-                }
-                else
-                {
-                    Game.C3 = 2;
-                    C3.Background = new ImageBrush(new BitmapImage(new Uri("tac.png", UriKind.Relative)));
-                }
-                EndGame(Game.IsSomeoneWin());
-
-            }
-        }
-
-        private void EndGame(int Winner)
-        {
-            if (Winner == 0)
-            {
-
-            }
-            else if (Winner == 1)
-            {
-                textBlock1.Text = Game.X_count.ToString();
-                MessageBox.Show("Победа Крестиков!");
-                RestartWindow();
-            }
-            else if (Winner == 2)
-            {
-                textBlock2.Text = Game.O_count.ToString();
-                MessageBox.Show("Победа Ноликов!");
-                RestartWindow();
-            }
-            else if (Winner == -1) 
-            {
-                MessageBox.Show("Ничья! Играйте заново");
-                RestartWindow();
-            }
-        }
-
-
-
-        private void RestartWindow() 
-        {
-            A1.Background = null;
-            A2.Background = null;
-            A3.Background = null;
-            B1.Background = null;
-            B2.Background = null;
-            B3.Background = null;
-            C1.Background = null;
-            C2.Background = null;
-            C3.Background = null;
+            // Другие действия, если необходимо
         }
     }
 }
